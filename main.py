@@ -1,17 +1,40 @@
-# def max_arr() -> int:
-#     max_el = -1
-#     for ind in range(N):
-#         if array[0][ind] != '0':
-#             max_el = max(max_el, array[0][ind])
-#     return max(max_el, num - 1)
+
+# ==========================
+# ======= GENERATOR ========
+import random
+import sys
+def generate():
+    K = random.randint(100, 250)
+    print(K)
+    for i in range(K):
+        str = ""
+        j = 0
+        while j < K:
+            if j < K and round(random.random()) == 1:
+                str += '0'
+                j += 1
+            if j < K and round(random.random()) == 1:
+                str += 'x'
+                j += 1
+        print(str)
+    print("-> ")
+    return
+
+
+# generate()
+# sys.exit(0)
+
+# ======= GENERATOR ========
+# ==========================
+
+
 
 
 N = int(input())
 array = [[0 for _ in range(N)] for _ in range(2)]
 num = 1
 array[0] = list(input())
-r = N - 1
-while array[0] == ['0' for _ in range(N)] and N > 0:
+while array[0] == ['0' for _ in range(N)] and N > 1:
     array[0] = list(input())
     N -= 1
 for j in range(N):
@@ -49,5 +72,4 @@ for _ in range(N - 1):  # Считываю остальные строки в ar
                 num += 1
     array[0] = array[1]  # Переставляю строку на уровень выше
 
-# print(max_arr())
 print(num - 1)
