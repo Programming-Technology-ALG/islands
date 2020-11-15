@@ -21,10 +21,9 @@
 #         print(output)
 #     print("-> ")
 #     return
-#
-#
+
+
 # generate()
-# sys.exit(0)
 
 # ======= GENERATOR ========
 # ==========================
@@ -58,8 +57,6 @@ if array[0] != empty_list:
 
 for _ in range(N - 1):  # Считываю оставшиеся строки
     array[1] = list(input())
-    if array[1] == empty_list:
-        continue
     for i in range(N):
         if array[1][i] == 'x':
             if i > 0 and 'x' != array[0][i] != '0' and 'x' != array[1][i - 1] != '0' and array[0][i] != array[1][i - 1]:
