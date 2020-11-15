@@ -29,14 +29,6 @@ def generate():
 # ==========================
 
 
-def change(count, max, min) -> int:
-    for index in range(N):
-        if array[0][index] == max:
-            array[0][index] = min
-        if array[1][index] == max:
-            array[1][index] = min
-    count += 1
-    return count
 #
 #
 # def max_arr(ar) -> int:
@@ -118,6 +110,16 @@ def change(count, max, min) -> int:
 # print(serial_number - 1)
 
 
+def countChange(count, max, min) -> int:
+    for index in range(N):
+        if array[0][index] == max:
+            array[0][index] = min
+        if array[1][index] == max:
+            array[1][index] = min
+    count += 1
+    return count
+
+
 def refactor(index_i: int) -> None:
     for index_j in range(N):
         if array[index_i][index_j] == 'x':
@@ -126,46 +128,38 @@ def refactor(index_i: int) -> None:
             array[index_i][index_j] = -1
     return
 
+
 serial_number = 0
 change_counter = 0
 N = int(input())
 array = [[0 for _ in range(N)] for _ in range(2)]
 
 array[0] = list(input())  # Считываю первую строку
-refactor(0)
-# for i in range(N):
-#     if array[0][i] == 'x':
-#         array[0][i] = 0
-#     else:
-#         array[0][i] = -1
-for i in range(N):
-    if array[0][i] == 0:
-        array[0][i] = serial_number + 1
-        if i > 0:
-            if array[0][i - 1] > 0:
-                array[0][i] = array[0][i - 1]
-        if array[0][i] == serial_number + 1:
-            serial_number += 1
+if array[0] != ['0' for _ in range(N)]:
+    refactor(0)
+    for i in range(N):
+        if array[0][i] == 0:
+            array[0][i] = serial_number + 1
+            if i > 0:
+                if array[0][i - 1] > 0:
+                    array[0][i] = array[0][i - 1]
+            if array[0][i] == serial_number + 1:
+                serial_number += 1
 
-for k in range(N - 1):  # Считываю оставшиеся строки
+for _ in range(N - 1):  # Считываю оставшиеся строки
     array[1] = list(input())
+    if array[1] == ['0' for _ in range(N)]:
+        continue
+    refactor(1)
     for i in range(N):
-        if array[1][i] == 'x':
-            array[1][i] = 0
-        else:
-            array[1][i] = -1
-    for i in range(N):
-        if array[1][i] == -1:
-            continue
-        elif array[1][i] == 0:
+        if array[1][i] == 0:
             if i > 0 and 0 < array[0][i] != array[1][i - 1] > 0:
                 array[1][i] = min(array[0][i], array[1][i - 1])
-                a = max(array[0][i], array[1][i - 1])
-                change_counter = change(change_counter, a, array[1][i])
+                change_counter = countChange(change_counter, max(array[0][i], array[1][i - 1]), array[1][i])
             elif array[0][i] > 0:
                 array[1][i] = array[0][i]
-            elif i > 0 and array[1][i-1] > 0:
-                array[1][i] = array[1][i-1]
+            elif i > 0 and array[1][i - 1] > 0:
+                array[1][i] = array[1][i - 1]
             else:
                 serial_number += 1
                 array[1][i] = serial_number
